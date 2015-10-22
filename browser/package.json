@@ -5,7 +5,7 @@
   "main": " ",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./webpack.config.js --progress"
+    "build": "webpack --config ./webpack.config.js --progress && cp ./node_modules/angular/angular.min.js ./build.angular.min.js && cp ./node_modules/angular/angular.js ./build.angular.js"
   },
   "author": "",
   "license": "ISC",
