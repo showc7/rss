@@ -1,4 +1,6 @@
-import MainAppController from './main/MainAppController.es';
+import angular from 'angular';
+import { MainAppController } from './main/MainAppController.es';
 
-angular.module('MainApp',[])
-   .controller('MainAppController',['$scope',MainAppController]);
+var eModule = angular.module('app', []).controller('MainAppController',MainAppController);
+
+export default eModule;
