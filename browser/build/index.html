@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <head>
    <title>RSSlight</title>
-   <script src='angular.js'></script>
+   <!--<script src='angular.js'></script>-->
    <script src='bundle.js'></script>
-   <link rel='stylesheet' href='static/styles/main.css' type='text/css'/>
+   <!--<link rel='stylesheet' href='static/styles/main.css' type='text/css'/>-->
 </head>
 <body>
-   <div class='app-container'>
-      <div ng-controller='MainAppController as MAC' class='controller-container'>
-         <div ng-include='./templates/feed.html' class='feed-container'>
+   <div ng-app='app' class='app-container'>
+      <div ng-controller='MainAppController' class='controller-container'>
+         <!--<div ng-include='./templates/feed.html' class='feed-container'>
          </div>
          <div ng-include='./templates/list.html' class='list-container'>
-         </div>
-         <div ng-controller='MainAppController as MAC' ng-model='text'>
+         </div>-->
+         <!--<div ng-controller='MainAppController as MAC' ng-model='text'>
             {{ text }}
-         </div>
+         </div>-->
+         {{ text }}
       </div>
    </div>
 </body>
