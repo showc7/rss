@@ -5,17 +5,21 @@
    <script src='bundle.js'></script>
    <!--<link rel='stylesheet' href='static/styles/main.css' type='text/css'/>-->
 </head>
-<body>
-   <div ng-app='app' class='app-container'>
+<body ng-app='app'>
       <div ng-controller='MainAppController' class='controller-container'>
-         <!--<div ng-include='./templates/feed.html' class='feed-container'>
-         </div>
-         <div ng-include='./templates/list.html' class='list-container'>
-         </div>-->
-         <!--<div ng-controller='MainAppController as MAC' ng-model='text'>
-            {{ text }}
-         </div>-->
-         {{ text }}
+         {{text}}
+	      {{title}}
+         <div ng-repeat="feed in feed" class="col-md-6"> 
+            <div class="thumbnail">
+               <p class="title"> {{feed.title}} </p>
+			      <p class="title"> {{feed.text}} </p>
+               <p class="date"> {{feed.pubdate | date}}</p>
+			      <a class="title" href="{{feed.link}}"> boo </a>
+               <div class="rating"> 
+  				      <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p> 
+                  <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p> 
+			      </div>
+            </div>
+        </div>
       </div>
-   </div>
 </body>
