@@ -13,6 +13,7 @@
     "express-route-tree": "^4.2.0",
     "http-server": "^0.8.5",
     "local-web-server": "^0.5.23",
+    "pouchdb": "^5.0.0",
     "redirect": "^0.2.0",
     "request": "^2.65.0",
     "serve-static": "^1.10.0"
