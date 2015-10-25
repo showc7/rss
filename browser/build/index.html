@@ -8,21 +8,41 @@
    <link rel='stylesheet' href='main.css' type='text/css'/>
 </head>
 <body ng-app='app'>
-      <div ng-controller='MainAppController' class='controller-container'>
+   <div ng-controller='MainAppController' class='controller-container'>
+
+      <div class = "menu">
+         <div ng-repeat='m in menu'>
+            <div ng-click='$eval(m.onClick)()'>
+               {{m.name}}
+            </div>
+         </div>
+      </div>
+
+      <div ng-show='showList[0].show'>
          <div class = "header">
-			<h1>{{title}}</h1>
-	  </div>
+            <h1>{{title}}</h1>
+	 </div>
+         <div ng-repeat='l in feeds'>
+            <div class="thumbnail">
+               <p class="text" ng-click="$eval(l.onClick)(l)"> {{l.key}} </p>
+            </div>
+         </div>
+      </div>
+
+      <div ng-show='showList[1].show'>
          <div ng-repeat="feed in feed" class="col-md-6"> 
             <div class="thumbnail">
                <p class="title"> {{feed.title}} </p>
-			      <p class="title"> {{feed.text}} </p>
+	       <p class="title"> {{feed.text}} </p>
                <p class="date"> {{feed.pubdate | date}}</p>
-			      <a class="title" href="{{feed.link}}"> boo </a>
+	       <a class="title" href="{{feed.link}}"> boo </a>
                <div class="rating"> 
-  				      <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p> 
+  		  <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p> 
                   <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p> 
-			      </div>
+	       </div>
             </div>
-        </div>
+         </div>
       </div>
+
+   </div>
 </body>
