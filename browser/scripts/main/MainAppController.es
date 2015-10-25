@@ -7,10 +7,26 @@ class MainAppController {
       this.$scope = $scope;
       this.$http = $http;
       this.initalize(this);
+      this.$scope.showList = [ 
+  		{ show: false },
+                { show: true }
+	    ];
+      this.$scope.feed = 
+	  [ 
+  		{ 
+    			title: 'The Old Town of Pingyao', 
+    			text: 'Pingyao is a small town in central Shanxi Province whose history goes back 2,700 years.',
+    			pubdate: new Date('2004', '09', '14'), 
+    			link: 'http://english.china.com/zh_cn/culture_history/heritages/11023762/20040914/11878201.html',
+			likes: 0,
+			dislikes: 0
+  		}
+	   ];
    }
 
    initalize(self) {
       this.$scope.feeds = [];
+      //this.$scope.showListVar = false;
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
    }
@@ -44,6 +60,11 @@ class MainAppController {
                d.onClick = 'choseSourceListItem';
                list.push(d);
             }
+            self.$scope.showList = [ 
+  		{ show: true },
+                { show: false }
+	    ];
+
             console.log(list);
             self.$scope.feeds = list;
          });
@@ -61,10 +82,20 @@ class MainAppController {
          self.$scope.menu = self.initMenu();
       }
       this.$scope.choseSourceListItem = function(item) {
-         Server.getFeedData(self.$http, item.url, (data) => {
+         console.log(item.key);
+         Server.getFeedData(self.$http, item.key, (data) => {
             self.$scope.feeds = data;
+            console.log(data);
          });
       }
+      this.$scope.plusOne=
+         function(index) {
+            this.$scope.products[index].likes +=1;
+         };
+      this.$scope.minusOne=
+         function(index) {
+            this.$scope.products[index].dislikes +=1;
+         };
    }
 }
 
