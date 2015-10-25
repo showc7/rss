@@ -1,0 +1,34 @@
+<!--
+<div class="feed">
+   <ul class="feed">
+      <li class="feed" ng-repeat="feed in feed">
+         <div class="thumbnail">
+            <p class="title"> {{feed.name}} </p>
+            <p class="text"> {{feed.text}} </p>
+            <p class="date"> {{feed.pubdate | date}}</p>
+            <a class="link" href="feed.link"></a>
+            <div class="rating"> 
+              <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p> 
+              <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p> 
+					  </div>
+         </div>
+      </li>
+   </ul>
+</div>
+-->
+
+      <ul class="feed">
+         <li class="feed" ng-repeat="feed in feed">
+            <div class="thumbnail">
+               <p class="title"> {{feed.title}} </p>
+               <p class="title"> {{feed.text}} </p>
+               <p class="date"> {{feed.pubdate | date}}</p>
+               <a class="title" href="{{feed.link}}"> boo </a>
+               <div class="rating">
+                  <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p>
+                  <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p>
+               </div>
+            </div>
+      </li>
+   </ul>
+

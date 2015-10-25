@@ -7,10 +7,7 @@ class MainAppController {
       this.$scope = $scope;
       this.$http = $http;
       this.initalize(this);
-      this.$scope.showList = [ 
-  		{ show: false },
-                { show: true }
-	    ];
+      this.$scope.currentState = 2;
       this.$scope.feed = 
 	  [ 
   		{ 
@@ -46,11 +43,13 @@ class MainAppController {
 
    addHandlers(self) {
       this.$scope.settings = function () {
+         self.$scope.currentState = 4;
          self.$scope.menu = [{
             name: 'back',
             onClick: 'settingsBack'
          }];
       };
+
       this.$scope.list = function () {
          console.log('list');
          Server.getAllFeedsList(self.$http, (data) => {
@@ -60,42 +59,57 @@ class MainAppController {
                d.onClick = 'choseSourceListItem';
                list.push(d);
             }
-            self.$scope.showList = [ 
-  		{ show: true },
-                { show: false }
-	    ];
-
+            self.$scope.currentState = 1;
             console.log(list);
             self.$scope.feeds = list;
          });
       };
+
       this.$scope.addFeed = function() {
          self.$scope.menu = [{
             name: 'back',
             onClick: 'addFeedBack'
          }];
+         self.$scope.currentState = 3;
       };
+
       this.$scope.settingsBack = function() {
          self.$scope.menu = self.initMenu();
+         self.$scope.currentState = 2;
       }
+
       this.$scope.addFeedBack = function() {
          self.$scope.menu = self.initMenu();
+         self.$scope.currentState = 2;
       }
+
       this.$scope.choseSourceListItem = function(item) {
          console.log(item.key);
          Server.getFeedData(self.$http, item.key, (data) => {
             self.$scope.feeds = data;
             console.log(data);
          });
+         self.$scope.currentState = 2;
       }
+
       this.$scope.plusOne=
          function(index) {
             this.$scope.products[index].likes +=1;
          };
+
       this.$scope.minusOne=
          function(index) {
             this.$scope.products[index].dislikes +=1;
          };
+
+      this.$scope.stateResolver=
+         function(index) {
+            if (index == self.$scope.currentState) {
+               return true;
+            } else {
+               return false;
+            }
+         }
    }
 }
 
