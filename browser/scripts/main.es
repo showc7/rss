@@ -1,3 +1,4 @@
+import '../styles/main.css';
 import angular from 'angular';
 import { MainAppController } from './main/MainAppController.es';
 
