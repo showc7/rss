@@ -5,7 +5,7 @@
   "main": " ",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./webpack.config.js --progress && cp ./node_modules/angular/angular.min.js ./build/angular.min.js && cp ./node_modules/angular/angular.js ./build/angular.js"
+    "build": "mkdir -p ./build/partials && webpack --config ./webpack.config.js --progress && cp ./node_modules/angular/angular.min.js ./build/angular.min.js && cp ./node_modules/angular/angular.js ./build/angular.js && cp ./html/* ./build/"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,9 @@
     "babel-core": "^5.8.25",
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.8.25",
+    "css-loader": "^0.21.0",
     "extract-text-webpack-plugin": "^0.8.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.2"
   }
 }
