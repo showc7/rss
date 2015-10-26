@@ -1,4 +1,4 @@
 node_modules
-browser/build/*.js
+browser/build
 *~
 *.log
