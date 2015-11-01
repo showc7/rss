@@ -1,3 +1,9 @@
-<div class="input">
-   To do add feed.
-</div>
+<form role="form" ng-submit="addFeedBack()">
+      <div>
+        <input type="text" ng-model="feed.name" placeholder="Enter feed name">
+        <input type="text" ng-model="feed.key" placeholder="Enter feed URL">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Add">
+        </span>
+      </div>
+  </form>
