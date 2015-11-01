@@ -5,9 +5,11 @@
                <ul class="feed" ng-repeat="item in feed.entries">
                   <li class="feed">
                      <a class="title" href="{{item.link}}">{{item.title}}</a>
-                     <div class="content">
-                        {{item.content}}
-                     </div>
+                     <!--<div class="content" bind-html-unsafe="item.content">
+                     </div>-->
+                     <p class="content">
+                        {{item.contentSnippet}}
+                     </p>
                      <p class="date">
                         Author: {{item.author}}
                      </p>
