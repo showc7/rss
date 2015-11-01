@@ -8,17 +8,11 @@ class MainAppController {
       this.$http = $http;
       this.initalize(this);
       this.$scope.currentState = 2;
-      this.$scope.feed = 
-	  [ 
-  		{ 
-    			title: 'The Old Town of Pingyao', 
-    			text: 'Pingyao is a small town in central Shanxi Province whose history goes back 2,700 years.',
-    			pubdate: new Date('2004', '09', '14'), 
-    			link: 'http://english.china.com/zh_cn/culture_history/heritages/11023762/20040914/11878201.html',
-			likes: 0,
-			dislikes: 0
-  		}
-	   ];
+            var startFeed = 'http://www.ololo.com/feed';
+      Server.getFeedData(this.$http, startFeed, (data) => {
+            this.$scope.feeds = data;
+            console.log(data);
+         });
    }
 
    initalize(self) {
