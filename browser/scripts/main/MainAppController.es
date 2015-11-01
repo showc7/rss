@@ -36,7 +36,7 @@ class MainAppController {
          name: 'list',
          onClick: 'list'
       },{
-         name: 'add feed',
+         name: 'manage feeds',
          onClick: 'addFeed'
       }];
    }
@@ -61,23 +61,31 @@ class MainAppController {
       };
 
       this.$scope.list = function () {
+         self.$scope.currentState = 1;
          Server.getAllFeedsList(self.$http, (data) => {
             var list = [];
             for(var k in data) {
                var d = data[k];
                d.onClick = 'choseSourceListItem';
+               d.onRemove = 'removeFeed';
                list.push(d);
             }
-            self.$scope.currentState = 1;
             self.$scope.feeds = list;
          });
       };
 
       this.$scope.addFeed = function() {
          console.log('addFeed');
+         self.$scope.list();
          self.$scope.menu = self.backMenu();
          self.$scope.currentState = 3;
       };
+
+      this.$scope.removeFeed = function(item) {
+         Server.removeFeed(self.$http, item.key);
+         self.$scope.list();
+         self.$scope.currentState = 3;
+      }
 
       this.$scope.settingsBack = function() {
          console.log('settingsBack');
