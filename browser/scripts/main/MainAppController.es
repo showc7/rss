@@ -8,11 +8,15 @@ class MainAppController {
       this.$http = $http;
       this.initalize(this);
       this.$scope.currentState = 2;
-            var startFeed = 'http://www.ololo.com/feed';
+      this.$scope.feed = [{
+         name: '',
+         key: ''
+      }];
+      var startFeed = 'http://www.ololo.com/feed';
       Server.getFeedData(this.$http, startFeed, (data) => {
-            this.$scope.feeds = data;
-            console.log(data);
-         });
+         this.$scope.feeds = data;
+         console.log(data);
+      });
    }
 
    initalize(self) {
