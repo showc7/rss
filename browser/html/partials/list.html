@@ -1,9 +1,8 @@
          <div class = "header">
             <h1>{{title}}</h1>
 	 </div>
-         <div ng-repeat='l in feeds'>
-            <div class="thumbnail">
-               <p class="text" ng-click="$eval(l.onClick)(l)"> {{l.key}} </p>
-               <div>{{l}}</div>
-            </div>
-         </div>
+         <ul ng-repeat='l in feeds'>
+            <li class="thumbnail">
+               <a class="text" ng-click="$eval(l.onClick)(l)"> {{l.key}} </a>
+            </li>
+         </ul>
