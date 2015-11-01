@@ -22,6 +22,7 @@ class MainAppController {
    }
 
    initalize(self) {
+         console.log('initialize');
       this.$scope.feeds = [];
       //this.$scope.showListVar = false;
       this.$scope.menu = this.initMenu();
@@ -29,6 +30,7 @@ class MainAppController {
    }
 
    initMenu() {
+         console.log('initMenu');
       return [{
          name: 'settings',
          onClick: 'settings'
@@ -43,6 +45,7 @@ class MainAppController {
 
    addHandlers(self) {
       this.$scope.settings = function () {
+         console.log('settings');
          self.$scope.currentState = 4;
          self.$scope.menu = [{
             name: 'back',
@@ -51,7 +54,6 @@ class MainAppController {
       };
 
       this.$scope.list = function () {
-         console.log('list');
          Server.getAllFeedsList(self.$http, (data) => {
             var list = [];
             for(var k in data) {
@@ -60,12 +62,12 @@ class MainAppController {
                list.push(d);
             }
             self.$scope.currentState = 1;
-            console.log(list);
             self.$scope.feeds = list;
          });
       };
 
       this.$scope.addFeed = function() {
+         console.log('addFeed');
          self.$scope.menu = [{
             name: 'back',
             onClick: 'addFeedBack'
@@ -74,16 +76,20 @@ class MainAppController {
       };
 
       this.$scope.settingsBack = function() {
+         console.log('settingsBack');
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
       }
 
       this.$scope.addFeedBack = function() {
+         console.log('addFeedBack');
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
+         Server.addFeed(self.$http, self.$scope.feed.key, self.$scope.feed.name);
       }
 
       this.$scope.choseSourceListItem = function(item) {
+         console.log('choseSourceListItem');
          console.log(item.key);
          Server.getFeedData(self.$http, item.key, (data) => {
             self.$scope.feeds = data;
