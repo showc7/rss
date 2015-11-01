@@ -18,4 +18,7 @@ export default class Server {
       $http.get(Constants.Server.ADD_FEED + '?url=' + url + '&name=' + name);
    }
    
+   static removeFeed($http,url) {
+      $http.get(Constants.Server.REMOVE_FEED + '?url=' + url);
+   }
 }
