@@ -43,14 +43,23 @@ class MainAppController {
       }];
    }
 
+   backMenu() {
+      return [{
+         name: 'back',
+         onClick: 'startView'
+      }];
+   }
+
    addHandlers(self) {
       this.$scope.settings = function () {
          console.log('settings');
          self.$scope.currentState = 4;
-         self.$scope.menu = [{
-            name: 'back',
-            onClick: 'settingsBack'
-         }];
+         self.$scope.menu = self.backMenu();
+      };
+
+      this.$scope.startView = function () {
+         self.$scope.currentState = 2;
+         self.$scope.menu = self.initMenu();
       };
 
       this.$scope.list = function () {
@@ -68,10 +77,7 @@ class MainAppController {
 
       this.$scope.addFeed = function() {
          console.log('addFeed');
-         self.$scope.menu = [{
-            name: 'back',
-            onClick: 'addFeedBack'
-         }];
+         self.$scope.menu = self.backMenu();
          self.$scope.currentState = 3;
       };
 
