@@ -1,8 +1,8 @@
 
-            <div class="thumbnail" ng-repeat="feed in feeds">
-               <a class="title" href="{{feed.link}}"> <h2>{{feed.title}} </h2></a>
-               <h3 class="description"> {{feed.description}} </h3></br>
-               <div class="feed" ng-repeat="item in feed.entries">
+            <div class="thumbnail" ng-repeat="record in feed">
+               <a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
+               <h3 class="description"> {{record.description}} </h3></br>
+               <div class="record" ng-repeat="item in record.entries">
                   
                      <a class="title" href="{{item.link}}">{{item.title}}</a>
                      <!--<div class="content" bind-html-unsafe="item.content">
