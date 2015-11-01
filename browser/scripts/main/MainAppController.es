@@ -14,7 +14,7 @@ class MainAppController {
       }];
       var startFeed = 'http://www.ololo.com/feed';
       Server.getFeedData(this.$http, startFeed, (data) => {
-         this.$scope.feeds = data;
+         this.$scope.feed = data;
          console.log(data);
       });
    }
@@ -104,7 +104,7 @@ class MainAppController {
          console.log('choseSourceListItem');
          console.log(item.key);
          Server.getFeedData(self.$http, item.key, (data) => {
-            self.$scope.feeds = data;
+            self.$scope.feed = data;
             console.log(data);
          });
          self.$scope.currentState = 2;
