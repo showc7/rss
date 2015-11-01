@@ -1,9 +1,9 @@
-<form role="form" ng-submit="addFeedBack()">
-      <div>
-        <input type="text" ng-model="feed.name" placeholder="Enter feed name">
-        <input type="text" ng-model="feed.key" placeholder="Enter feed URL">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Add">
-        </span>
-      </div>
-  </form>
+<div id="form1">
+      <form role="form" ng-submit="addFeedBack()">
+            <input type="text" class="input" ng-model="feed.name" placeholder="Enter feed name">
+            <hr>
+            <input type="text" class="input" ng-model="feed.key" placeholder="Enter feed URL">
+            <hr>
+            <input type="submit" class="button" value="Add">
+      </form>
+</div>
