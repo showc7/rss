@@ -1,13 +1,13 @@
-         <div class="feed" ng-repeat="feed in feeds">
-            <div class="thumbnail">
+
+            <div class="thumbnail" ng-repeat="feed in feeds">
                <a class="title" href="{{feed.link}}"> <h2>{{feed.title}} </h2></a>
-               <h3 class="description"> {{feed.description}} </h4></br>
-               <ul class="feed" ng-repeat="item in feed.entries">
-                  <li class="feed">
+               <h3 class="description"> {{feed.description}} </h3></br>
+               <div class="feed" ng-repeat="item in feed.entries">
+                  
                      <a class="title" href="{{item.link}}">{{item.title}}</a>
                      <!--<div class="content" bind-html-unsafe="item.content">
                      </div>-->
-                     <p class="content">
+                     <p class="title">
                         {{item.contentSnippet}}
                      </p>
                      <p class="date">
@@ -16,14 +16,10 @@
                      <p class="date">
                         Published date: {{item.publishedDate}}
                      </p>
-                     <div class="rating">
-                        <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p>
-                        <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p>
-                     </div>
-                  </li>
-               </ul>
+                     <p class="likes">F</p>
+               </div>
             </div>
-         </div>
+
 
 
       <!--<ul class="feed">
