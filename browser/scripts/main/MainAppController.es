@@ -2,7 +2,7 @@ import Server from './components/requests.es'
 
 
 class MainAppController {
-   constructor ($scope,$http) {
+   constructor ($scope,$http,$cookies) {
       console.log('ok');
       this.$scope = $scope;
       this.$http = $http;
@@ -12,6 +12,7 @@ class MainAppController {
          name: '',
          key: ''
       }];
+      this.$scope.favoritesList = [];
       var startFeed = 'http://www.ololo.com/feed';
       Server.getFeedData(this.$http, startFeed, (data) => {
          this.$scope.feeds = data;
@@ -30,8 +31,8 @@ class MainAppController {
    initMenu() {
          console.log('initMenu');
       return [{
-         name: 'settings',
-         onClick: 'settings'
+         name: 'favorites',
+         onClick: 'favorites'
       },{
          name: 'list',
          onClick: 'list'
@@ -49,10 +50,19 @@ class MainAppController {
    }
 
    addHandlers(self) {
-      this.$scope.settings = function () {
-         console.log('settings');
+      this.$scope.favorites = function () {
+         console.log('favorites');
          self.$scope.currentState = 4;
          self.$scope.menu = self.backMenu();
+         var storedList = [];
+         console.log(JSON.parse(document.cookie.match(/\[.*\]/)));
+         if (document.cookie.length > 0) {
+            storedList = JSON.parse(document.cookie.match(/\[.*\]/));
+         }
+         console.log(document.cookie);
+         console.log(storedList);
+         self.$scope.favoritesList = storedList[0];
+         console.log(self.$scope.favoritesList);
       };
 
       this.$scope.startView = function () {
@@ -79,8 +89,8 @@ class MainAppController {
          self.$scope.currentState = 3;
       };
 
-      this.$scope.settingsBack = function() {
-         console.log('settingsBack');
+      this.$scope.favoritesBack = function() {
+         console.log('favoritesBack');
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
       }
@@ -101,6 +111,23 @@ class MainAppController {
          });
          self.$scope.currentState = 2;
       }
+
+      this.$scope.addFavorite=
+         function(item) {
+            console.log(item);
+            var storedList = [];
+            if (document.cookie > 0) {
+               storedList = JSON.parse(document.cookie);
+            }
+            var newItem = [{
+               title: item.title,
+               link: item.link
+            }];
+            storedList.push(newItem);
+            console.log(storedList);
+            console.log(JSON.stringify(storedList));
+            document.cookie = 'favorites=' + JSON.stringify(storedList);
+         };
 
       this.$scope.plusOne=
          function(index) {
