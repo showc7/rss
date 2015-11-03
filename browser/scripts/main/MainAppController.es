@@ -61,7 +61,7 @@ class MainAppController {
          }
          console.log(document.cookie);
          console.log(storedList);
-         self.$scope.favoritesList = storedList[0];
+         self.$scope.favoritesList = storedList;
          console.log(self.$scope.favoritesList);
       };
 
@@ -114,15 +114,19 @@ class MainAppController {
 
       this.$scope.addFavorite=
          function(item) {
+            
             console.log(item);
             var storedList = [];
-            if (document.cookie > 0) {
-               storedList = JSON.parse(document.cookie);
-            }
-            var newItem = [{
+            var newItem = {
                title: item.title,
                link: item.link
-            }];
+            };
+            if (document.cookie.length > 0) {
+               storedList = JSON.parse(document.cookie.match(/\[.*\]/));
+               //storedList[0].push(newItem);
+            }
+            console.log(storedList);
+            console.log(storedList[0]);
             storedList.push(newItem);
             console.log(storedList);
             console.log(JSON.stringify(storedList));
