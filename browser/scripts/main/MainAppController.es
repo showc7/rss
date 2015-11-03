@@ -21,15 +21,14 @@ class MainAppController {
    }
 
    initalize(self) {
-         console.log('initialize');
+      console.log('initialize');
       this.$scope.feeds = [];
-      //this.$scope.showListVar = false;
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
    }
 
    initMenu() {
-         console.log('initMenu');
+      console.log('initMenu');
       return [{
          name: 'favorites',
          onClick: 'favorites'
@@ -55,14 +54,11 @@ class MainAppController {
          self.$scope.currentState = 4;
          self.$scope.menu = self.backMenu();
          var storedList = [];
-         console.log(JSON.parse(document.cookie.match(/\[.*\]/)));
          if (document.cookie.length > 0) {
             storedList = JSON.parse(document.cookie.match(/\[.*\]/));
          }
          console.log(document.cookie);
-         console.log(storedList);
          self.$scope.favoritesList = storedList;
-         console.log(self.$scope.favoritesList);
       };
 
       this.$scope.startView = function () {
@@ -113,8 +109,7 @@ class MainAppController {
       }
 
       this.$scope.addFavorite=
-         function(item) {
-            
+         function(item) {            
             console.log(item);
             var storedList = [];
             var newItem = {
@@ -123,13 +118,8 @@ class MainAppController {
             };
             if (document.cookie.length > 0) {
                storedList = JSON.parse(document.cookie.match(/\[.*\]/));
-               //storedList[0].push(newItem);
             }
-            console.log(storedList);
-            console.log(storedList[0]);
             storedList.push(newItem);
-            console.log(storedList);
-            console.log(JSON.stringify(storedList));
             document.cookie = 'favorites=' + JSON.stringify(storedList);
          };
 
@@ -149,16 +139,6 @@ class MainAppController {
                storedList.splice(index, 1);
             }
             document.cookie = 'favorites=' + JSON.stringify(storedList);
-         };
-
-      this.$scope.plusOne=
-         function(index) {
-            this.$scope.products[index].likes +=1;
-         };
-
-      this.$scope.minusOne=
-         function(index) {
-            this.$scope.products[index].dislikes +=1;
          };
 
       this.$scope.stateResolver=
