@@ -139,6 +139,7 @@ class MainAppController {
                storedList.splice(index, 1);
             }
             document.cookie = 'favorites=' + JSON.stringify(storedList);
+            self.$scope.favoritesList = storedList;
          };
 
       this.$scope.stateResolver=
