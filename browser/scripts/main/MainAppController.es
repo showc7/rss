@@ -1,8 +1,8 @@
-import Server from './components/requests.es'
+import Server from './components/requests.es';
 
 
 class MainAppController {
-   constructor ($scope,$http) {
+   constructor($scope, $http) {
       console.log('ok');
       this.$scope = $scope;
       this.$http = $http;
@@ -25,6 +25,14 @@ class MainAppController {
       //this.$scope.showListVar = false;
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
+      this.testSocket();
+   }
+
+   testSocket() {
+      Server.wsGet((data) => {
+         console.log(data);
+      });
+      Server.wsSend('hello ws');
    }
 
    initMenu() {
@@ -32,10 +40,10 @@ class MainAppController {
       return [{
          name: 'settings',
          onClick: 'settings'
-      },{
+      }, {
          name: 'list',
          onClick: 'list'
-      },{
+      }, {
          name: 'manage feeds',
          onClick: 'addFeed'
       }];
@@ -62,9 +70,10 @@ class MainAppController {
 
       this.$scope.list = function () {
          self.$scope.currentState = 1;
+         console.log('list');
          Server.getAllFeedsList(self.$http, (data) => {
             var list = [];
-            for(var k in data) {
+            for (var k in data) {
                var d = data[k];
                d.onClick = 'choseSourceListItem';
                d.onRemove = 'removeFeed';
@@ -110,17 +119,17 @@ class MainAppController {
          self.$scope.currentState = 2;
       }
 
-      this.$scope.plusOne=
+      this.$scope.plusOne =
          function(index) {
-            this.$scope.products[index].likes +=1;
+            this.$scope.products[index].likes += 1;
          };
 
-      this.$scope.minusOne=
+      this.$scope.minusOne =
          function(index) {
-            this.$scope.products[index].dislikes +=1;
+            this.$scope.products[index].dislikes += 1;
          };
 
-      this.$scope.stateResolver=
+      this.$scope.stateResolver =
          function(index) {
             if (index == self.$scope.currentState) {
                return true;
@@ -131,5 +140,7 @@ class MainAppController {
    }
 }
 
-MainAppController.$inject = ['$scope','$http'];
-export { MainAppController }
+MainAppController.$inject = ['$scope', '$http'];
+export {
+   MainAppController
+}
