@@ -1,0 +1,10 @@
+<div class = "header">
+   <h1>{{title}}</h1>
+   <h2>Favorites here!(For test reasons)</h2>
+</div>
+<ul ng-repeat='l in favoritesList'>
+   <li class="thumbnail">
+      <a class="text" href="{{l.link}}"> {{l.title}} </a>
+      <div class="remove" ng-click="removeFavorite(l)">X</div>
+   </li>
+</ul>

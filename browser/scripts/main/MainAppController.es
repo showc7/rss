@@ -2,7 +2,7 @@ import Server from './components/requests.es';
 
 
 class MainAppController {
-   constructor($scope, $http) {
+   constructor ($scope,$http,$cookies) {
       console.log('ok');
       this.$scope = $scope;
       this.$http = $http;
@@ -13,6 +13,7 @@ class MainAppController {
          name: '',
          key: ''
       }];
+      this.$scope.favoritesList = [];
       var startFeed = 'http://www.ololo.com/feed';
       Server.getFeedData(this.$http, startFeed, (data) => {
          this.$scope.feed = data;
@@ -22,18 +23,18 @@ class MainAppController {
    }
 
    initalize(self) {
-         console.log('initialize');
+      console.log('initialize');
       this.$scope.feeds = [];
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
    }
 
    initMenu() {
-         console.log('initMenu');
+      console.log('initMenu');
       return [{
-         name: 'settings',
-         onClick: 'settings'
-      }, {
+         name: 'favorites',
+         onClick: 'favorites'
+      },{
          name: 'list',
          onClick: 'list'
       }, {
@@ -50,7 +51,6 @@ class MainAppController {
    }
 
    addHandlers(self) {
-
       this.$scope.initSocket = function() {
          var ws = new WebSocket('ws://localhost:8080/info');
          Server.wsGet((data) => {
@@ -81,10 +81,16 @@ class MainAppController {
          });
       }
 
-      this.$scope.settings = function () {
-         console.log('settings');
+      this.$scope.favorites = function () {
+         console.log('favorites');
          self.$scope.currentState = 4;
          self.$scope.menu = self.backMenu();
+         var storedList = [];
+         if (document.cookie.length > 0) {
+            storedList = JSON.parse(document.cookie.match(/\[.*\]/));
+         }
+         console.log(document.cookie);
+         self.$scope.favoritesList = storedList;
       };
 
       this.$scope.startView = function () {
@@ -120,8 +126,8 @@ class MainAppController {
          self.$scope.currentState = 3;
       }
 
-      this.$scope.settingsBack = function() {
-         console.log('settingsBack');
+      this.$scope.favoritesBack = function() {
+         console.log('favoritesBack');
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
       }
@@ -143,14 +149,38 @@ class MainAppController {
          self.$scope.currentState = 2;
       }
 
-      this.$scope.plusOne =
-         function(index) {
-            this.$scope.products[index].likes += 1;
+      this.$scope.addFavorite=
+         function(item) {            
+            console.log(item);
+            var storedList = [];
+            var newItem = {
+               title: item.title,
+               link: item.link
+            };
+            if (document.cookie.length > 0) {
+               storedList = JSON.parse(document.cookie.match(/\[.*\]/));
+            }
+            storedList.push(newItem);
+            document.cookie = 'favorites=' + JSON.stringify(storedList);
          };
 
-      this.$scope.minusOne =
-         function(index) {
-            this.$scope.products[index].dislikes += 1;
+      this.$scope.removeFavorite=
+         function(item) {
+            console.log('removeFavorite');
+            console.log(item);
+            var storedList = JSON.parse(document.cookie.match(/\[.*\]/));
+            var index = -1;
+            for (var i = 0, len = storedList.length; i < len; i++) {
+               if (storedList[i].link == item.link) {
+                  index = i;
+                  break;
+               }
+            }
+            if (index > -1) {
+               storedList.splice(index, 1);
+            }
+            document.cookie = 'favorites=' + JSON.stringify(storedList);
+            self.$scope.favoritesList = storedList;
          };
 
       this.$scope.stateResolver =
