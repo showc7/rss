@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.13.3",
     "express-route-tree": "^4.2.0",
+    "express-ws": "^0.2.6",
     "http-server": "^0.8.5",
     "local-web-server": "^0.5.23",
     "pouchdb": "^5.0.0",
