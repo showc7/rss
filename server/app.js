@@ -13,9 +13,14 @@ app.use('/static', express.static(staticPath));
 app.use('/api', route(__dirname + '/controller'));
 
 app.ws('/info', function(ws, req) {
+   ws.on('open', function(msg) {
+      console.log('Connected');
+   });
    ws.on('message', function(msg) {
-      console.log(msg);
-      ws.send('OK');
+      var aWss = expressws.getWss('/info');
+      aWss.clients.forEach(function (client) {
+         client.send(msg);
+      });
    });
 });
 
