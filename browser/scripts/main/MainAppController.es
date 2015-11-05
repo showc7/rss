@@ -8,6 +8,7 @@ class MainAppController {
       this.$http = $http;
       this.initalize(this);
       this.$scope.currentState = 2;
+      this.$scope.feeds = [];
       this.$scope.feed = [{
          name: '',
          key: ''
@@ -17,22 +18,14 @@ class MainAppController {
          this.$scope.feed = data;
          console.log(data);
       });
+      this.$scope.initSocket();
    }
 
    initalize(self) {
          console.log('initialize');
       this.$scope.feeds = [];
-      //this.$scope.showListVar = false;
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
-      this.testSocket();
-   }
-
-   testSocket() {
-      Server.wsGet((data) => {
-         console.log(data);
-      });
-      Server.wsSend('hello ws');
    }
 
    initMenu() {
@@ -57,6 +50,37 @@ class MainAppController {
    }
 
    addHandlers(self) {
+
+      this.$scope.initSocket = function() {
+         var ws = new WebSocket('ws://localhost:8080/info');
+         Server.wsGet((data) => {
+            var data = JSON.parse(data);
+            if (data.action === 'addFeed') {
+               var item = {
+                  id: data.url,
+                  key: data.url,
+                  onClick: 'choseSourceListItem',
+                  onRemove: 'removeFeed'
+               }
+               self.$scope.feeds.push(item);
+               console.log(self.$scope.feeds);
+               self.$scope.$apply();
+            } else {
+               var index = -1;
+               for (var i = 0, len = self.$scope.feeds.length; i < len; i++) {
+                  if (self.$scope.feeds[i].key == data.url) {
+                     index = i;
+                     break;
+                  }
+               }
+               if (index > -1) {
+                  self.$scope.feeds.splice(index, 1);
+               }
+               self.$scope.$apply();
+            }
+         });
+      }
+
       this.$scope.settings = function () {
          console.log('settings');
          self.$scope.currentState = 4;
