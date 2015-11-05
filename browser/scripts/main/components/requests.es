@@ -18,14 +18,26 @@ export default class Server {
 
    static addFeed($http,url,name) {
       $http.get(Constants.Server.ADD_FEED + '?url=' + url + '&name=' + name);
-   }   
+      ws.send(JSON.stringify({
+         url: url,
+         name: name,
+         action: 'addFeed'
+      }));
+   }
+
    static removeFeed($http,url) {
       $http.get(Constants.Server.REMOVE_FEED + '?url=' + url);
+      console.log('sending');
+      ws.send(JSON.stringify({
+         url: url,
+         action: 'removeFeed'
+      }));
+   }
 
    static wsSend(data) {
       if(ws.readyState == 1) {
          ws.send(data);
-         console.log(data);
+         console.log('wsSend 1 data: ' + data);
       } else {
          var that = this;
          setTimeout(function () {
@@ -33,11 +45,11 @@ export default class Server {
          }, 100);
       }
    }
-
+   
+   
    static wsGet(callback) {
       ws.onmessage = function (_event) {
          callback(_event.data);
-         console.log(_event.data);
       };
    }
 }
