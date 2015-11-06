@@ -1,8 +1,6 @@
 
-            <div class="thumbnail" ng-repeat="record in feed">
-               <a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
-               <h3 class="description"> {{record.description}} </h3></br>
-               <div class="record" ng-repeat="item in record.entries">
+            <div ng-repeat="record in feed">
+               <div id="thumbnail" ng-repeat="item in record.entries">
                   
                      <a class="title" href="{{item.link}}">{{item.title}}</a>
                      <!--<div class="content" bind-html-unsafe="item.content">
@@ -13,10 +11,12 @@
                      <p class="date">
                         Author: {{item.author}}
                      </p>
+                     <div id="feed">
                      <p class="date">
                         Published date: {{item.publishedDate}}
                      </p>
-                     <p class="likes" ng-click="addFavorite(item)">F</p>
+                     </div>
+                     <div class="likes" ng-click="addFavorite(item)">F</div>
                </div>
             </div>
 
