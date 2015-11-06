@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<head>
-   <title>RSSlight</title>
-   <script src='bundle.js'></script>
-   <link rel='stylesheet' href='main.css' type='text/css'/>
-</head>
-<body ng-app='app'>
-   <div ng-controller='MainAppController' class='controller-container'>
-      	<div id="menu">
-      		<div ng-include="'partials/menu.html'"></div>
-	</div>
-	<div id="main">
-      		<div ng-show='stateResolver(1)'>
-         		<div ng-include="'partials/list.html'"></div>
-      		</div>
-      	
+<html>
+	<head>
+		<title>RSSlight</title>
+		<script src='bundle.js'></script>
+		<!--<link rel='stylesheet' href='main.css' type='text/css'/>-->
+		<link rel='stylesheet' href='main.css' type='text/css'/>
+	</head>
+	
+	<body ng-app='app'>
+		<div ng-controller='MainAppController' class='controller-container'>
+			<div id="menu">
+						<div ng-include="'partials/menu.html'"></div>
+					</div>
+			<div id="main">
+					
+					<div ng-show='stateResolver(1)'>
+						<div ng-include="'partials/list.html'"></div>
+					</div>
 
-      		<div ng-show='stateResolver(2)'>
-         		<div ng-include="'partials/feed.html'"></div>
-      		</div>
+					<div ng-show='stateResolver(2)'>
+						<div ng-include="'partials/feed.html'"></div>
+					</div>
 
-      		<div ng-show='stateResolver(3)'>
-        		<div ng-include="'partials/manageFeeds.html'"></div>
-      		</div>
+					<div ng-show='stateResolver(3)'>
+						<div ng-include="'partials/manageFeeds.html'"></div>
+					</div>
 
-      		<div ng-show='stateResolver(4)'>
-         		<div ng-include="'partials/favorites.html'"></div>
-      		</div>
-      	</div>
-     </div>
-</body>
+					<div ng-show='stateResolver(4)'>
+						<div ng-include="'partials/favorites.html'"></div>
+					</div>
+			</div>
+		</div>
+	</body>
+</html>
