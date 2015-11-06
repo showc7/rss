@@ -23,7 +23,6 @@ hr{
 	float:left;
 	width:20%;
 }
-
 #menu div#menu1{
 	cursor: pointer;
 	padding:  20px;
@@ -44,22 +43,74 @@ hr{
 }
 
 #thumbnail, #form1 {
-	padding:  5px;
+	padding:5px;
+	margin-bottom:20px;
 	background: rgba(210, 220, 236, 0.75);
 	border-style: solid;
 	border-width: 1px;
 	border-color: #ffb400;
-	font-size: 18px;
-	font-weight: 600;
 	color: #444444;
-	margin-bottom: 20px;
-	float: right;
+	font-size: 18px;
+    font-weight: 600;
+	float:right;
 	width:77%;
 }
 
+.title,.date{
+	color: #444;
+	font-size: 18px;
+    font-weight: 800;
+}
+
+.date {
+   color: #636363;
+   font-size: 14px;
+   font-weight: 200;
+}
+
+.link {
+   color: #393939;
+   margin: 20px;
+   text-decoration: underline;
+   font-size: 14px;
+   font-weight: 200;
+}
+#feed{
+	float:left;
+}
+.likes {
+	margin-right: 40px;
+	color: #222;
+	background: rgba(251, 255, 143, 0.75);
+	cursor: pointer;
+	display: inline-block;
+	font-size: 15px;
+	line-height: 40px;
+	min-width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: 200;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	transition: background 500ms;
+	float: right;
+}
+
+.likes:hover {
+   color: #ffd200 ;
+   background: rgba(246, 240, 15, 0.25);
+   transition: background 500ms;
+}
+
+.likes:active{
+color: #111 ;
+   background: rgba(235, 165, 55, 1);
+   transition: background 500ms;
+}
+
 #form1 input.input{
-	border: 2px solid #ffb400;
 	margin: 10px;
+	border:2px solid #ffb400; 
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	width: 99%;
@@ -81,65 +132,6 @@ hr{
 	background: rgb(208,129,10);
 }
 
-#form1 input.button:active {
-	background: rgb(235,160,16);
-	box-shadow: 0 3px rgbrgb(235,146,6) inset;
-}
-
-.title,.date {
-	color: #444;
-	font-size: 18px;
-    	font-weight: 800;
-}
-
-.date {
-   color: #636363;
-   font-size: 14px;
-   font-weight: 200;
-}
-
-.link {
-   color: #393939;
-   margin: 20px;
-   text-decoration: underline;
-   font-size: 14px;
-   font-weight: 200;
-}
-
-#feed{
-	float:left;
-}
-
-.likes {
-	margin-right: 40px;
-	color: #222;
-	background: rgba(251, 255, 143, 0.5);
-	cursor: pointer;
-	display: inline-block;
-	font-size: 15px;
-	line-height: 40px;
-	min-width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	margin: 0 -30px 0 40px;
-	text-align: center;
-	font-weight: 200;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-	transition: background 500ms;
-	float:right;
-}
-
-.likes:hover {
-   color: #ffd200 ;
-   background: rgba(246, 240, 15, 0.25);
-   transition: background 500ms;
-}
-
-.likes:active{
-color: #111 ;
-   background: rgba(235, 165, 55, 1);
-   transition: background 500ms;
-}
 
 @media only screen and (min-width: 1140px) {
 	#main
