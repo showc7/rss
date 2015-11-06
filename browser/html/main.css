@@ -1,12 +1,10 @@
 html, body {
-	font: small/1.6em Verdana, Helvetica, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	width:100%;
 }
 
 body{
-	background-image: url(https://cloud.githubusercontent.com/assets/15253351/10869489/4de70e22-80ba-11e5-90cf-3b826042b83d.jpg);
+	background-image: url(https://cloud.githubusercontent.com/assets/15253351/10990426/a907bdfc-845b-11e5-80ff-c788ad870dc5.png);
 }
 
 h1{
@@ -14,45 +12,24 @@ h1{
 }
 
 hr{
-	border-bottom: 1px solid #ffb400;
-}
-
-.header img#logo {
-	float: right;
-	margin-right: 50px;
-	margin-top: 20px;
-}
-
-.thumbnail {
-	padding:  0px 0px 20px 0px;
-	background: rgba(210, 220, 236, 0.75);
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffb400;
-	border-radius:15px;
-	color: #444444;
-	margin-top: 20px;
-	margin-left: 450px;
-	margin-right:40px;
-}
-
-#form1, #menu{
-	margin-top: 20px;
-	margin-left:40px;
-	background: rgba(210, 220, 236, 0.75);
-	padding:  0px 20px 20px 20px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #ffb400;
-	border-radius:15px;
-	color: #444444;
-	font-size: 18px;
-    font-weight: 600;
-	float: left;
+	border-bottom: 1px solid #0728f8;
 }
 
 #menu{
-	width: 330px;
+	border-right: 1px solid #ffb400;
+	background: rgba(43, 60, 101, 0.75);
+	/*background: rgba(220, 224, 248, 1);*/
+	height:100vh;
+	float:left;
+	width:20%;
+}
+
+#menu div#menu1{
+	cursor: pointer;
+	padding:  20px;
+	color: #f3930a;
+	font-size: 18px;
+    font-weight: 600;
 }
 
 #menu p{
@@ -65,22 +42,30 @@ hr{
    background: rgba(246, 240, 15, 0.25);
    transition: background 500ms;
 }
-#form1{
+
+#thumbnail, #form1 {
+	padding:  5px;
+	background: rgba(210, 220, 236, 0.75);
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ffb400;
 	font-size: 18px;
-	width: 60%;
+	font-weight: 600;
+	color: #444444;
+	margin-bottom: 20px;
+	float: right;
+	width:77%;
 }
 
 #form1 input.input{
-	border-left: 5px solid #ffb400;
-	margin-top: 20px;
-	padding:5px;
-	border:2px solid #ccc; 
+	border: 2px solid #ffb400;
+	margin: 10px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	width: 100%;
+	width: 99%;
 }
 #form1 input.input:focus{
-	border-color:#333;
+	border-color:#fb6b0b;
 }
 
 #form1 input.button{
@@ -101,12 +86,10 @@ hr{
 	box-shadow: 0 3px rgbrgb(235,146,6) inset;
 }
 
-.title,
-.date {
+.title,.date {
 	color: #444;
-	margin: 20px;
 	font-size: 18px;
-    font-weight: 800;
+    	font-weight: 800;
 }
 
 .date {
@@ -123,7 +106,12 @@ hr{
    font-weight: 200;
 }
 
+#feed{
+	float:left;
+}
+
 .likes {
+	margin-right: 40px;
 	color: #222;
 	background: rgba(251, 255, 143, 0.5);
 	cursor: pointer;
@@ -138,6 +126,7 @@ hr{
 	font-weight: 200;
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 	transition: background 500ms;
+	float:right;
 }
 
 .likes:hover {
@@ -152,3 +141,9 @@ color: #111 ;
    transition: background 500ms;
 }
 
+@media only screen and (min-width: 1140px) {
+	#main
+	{
+		padding:20px 40px 20px 40px;
+	}
+}
