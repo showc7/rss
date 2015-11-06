@@ -8,6 +8,8 @@ class MainAppController {
       this.$http = $http;
       this.initalize(this);
       this.$scope.currentState = 2;
+      this.$scope.favoritesState = [];
+      this.$scope.favoritesCounter = -1;
       this.$scope.feeds = [];
       this.$scope.feed = [{
          name: '',
@@ -15,8 +17,10 @@ class MainAppController {
       }];
       this.$scope.favoritesList = [];
       var startFeed = 'http://www.ololo.com/feed';
+      this.$scope.storedList = JSON.parse(document.cookie.match(/\[.*\]/));
       Server.getFeedData(this.$http, startFeed, (data) => {
-         this.$scope.feed = data;
+         this.$scope.feed = data.feed;
+         this.$scope.favoritesCounter = -1;
          console.log(data);
       });
       this.$scope.initSocket();
@@ -162,6 +166,8 @@ class MainAppController {
             }
             storedList.push(newItem);
             document.cookie = 'favorites=' + JSON.stringify(storedList);
+            self.$scope.favoritesList = storedList;
+            self.$scope.favoritesState[item.index] = !self.$scope.favoritesState[item.index];
          };
 
       this.$scope.removeFavorite=
@@ -169,27 +175,37 @@ class MainAppController {
             console.log('removeFavorite');
             console.log(item);
             var storedList = JSON.parse(document.cookie.match(/\[.*\]/));
-            var index = -1;
-            for (var i = 0, len = storedList.length; i < len; i++) {
-               if (storedList[i].link == item.link) {
-                  index = i;
-                  break;
-               }
-            }
+            var index = self.$scope.isFavorited(item.link);
             if (index > -1) {
                storedList.splice(index, 1);
             }
             document.cookie = 'favorites=' + JSON.stringify(storedList);
             self.$scope.favoritesList = storedList;
+            self.$scope.favoritesState[item.index] = !self.$scope.favoritesState[item.index];
+         };
+
+      this.$scope.isFavorited=
+         function(link) {
+            var index = -1;
+            for (var i = 0, len = self.$scope.favoritesList.length; i < len; i++) {
+               if (self.$scope.favoritesList[i].link === link) {
+                  index = i;
+                  break;
+               }
+            }
+            return index;
          };
 
       this.$scope.stateResolver =
          function(index) {
-            if (index == self.$scope.currentState) {
-               return true;
-            } else {
-               return false;
-            }
+            return (index === self.$scope.currentState) ? true : false;
+         }
+
+      this.$scope.favoriteResolver =
+         function(item) {
+            if (++self.$scope.favoritesCounter >= self.$scope.feed.entries.length) return;
+            self.$scope.feed.entries[self.$scope.favoritesCounter]["index"] = self.$scope.favoritesCounter;
+            self.$scope.favoritesState.push(self.$scope.isFavorited(item.link) === -1 ? true : false);
          }
    }
 }
