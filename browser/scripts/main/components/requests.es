@@ -1,6 +1,6 @@
 import Constants from '../../data/constants.es';
 
-var ws = new WebSocket(Constants.WEB_SOCKET.INFO);
+var ws = new WebSocket(Constants.Server.WEB_SOCKET.INFO);
 
 export default class Server {
 
