@@ -1,10 +1,12 @@
-html, body {
-	margin: 0;
-	padding: 0;
+html,body{
+	margin:0px;
+	padding:0px;
 }
 
+
 body{
-	background-image: url(https://cloud.githubusercontent.com/assets/15253351/10990426/a907bdfc-845b-11e5-80ff-c788ad870dc5.png);
+	background-image: url(fon.png);
+	/*background-color: #f1f2f8;*/
 }
 
 h1{
