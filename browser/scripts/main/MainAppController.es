@@ -6,14 +6,18 @@ class MainAppController {
       this.$scope = $scope;
       this.$http = $http;
       this.initalize(this);
+   }
+
+   initalize(self) {
+      console.log('initialize');
+      this.$scope.feeds = [];
+      this.$scope.menu = this.initMenu();
+      this.addHandlers(self);
       this.$scope.currentState = 2;
       this.$scope.favoritesState = [];
       this.$scope.favoritesCounter = -1;
       this.$scope.feeds = [];
-      this.$scope.feed = [{
-         name: '',
-         key: ''
-      }];
+      this.$scope.feed = [{ name: '', key: '' }];
       this.$scope.favoritesList = [];
       var startFeed = 'http://www.ololo.com/feed';
       this.$scope.storedList = JSON.parse(document.cookie.match(/\[.*\]/));
@@ -23,13 +27,6 @@ class MainAppController {
          console.log(data);
       });
       this.$scope.initSocket();
-   }
-
-   initalize(self) {
-      console.log('initialize');
-      this.$scope.feeds = [];
-      this.$scope.menu = this.initMenu();
-      this.addHandlers(self);
    }
 
    initMenu() {
