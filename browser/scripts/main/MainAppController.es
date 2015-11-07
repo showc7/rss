@@ -1,6 +1,5 @@
 import Server from './components/requests.es';
 
-
 class MainAppController {
    constructor ($scope,$http,$cookies) {
       console.log('ok');
@@ -147,14 +146,14 @@ class MainAppController {
          console.log('choseSourceListItem');
          console.log(item.key);
          Server.getFeedData(self.$http, item.key, (data) => {
-            self.$scope.feed = data;
+            self.$scope.feed = data.feed;
             console.log(data);
          });
          self.$scope.currentState = 2;
       }
 
       this.$scope.addFavorite=
-         function(item) {            
+         function(item) {
             console.log(item);
             var storedList = [];
             var newItem = {
@@ -198,14 +197,14 @@ class MainAppController {
 
       this.$scope.stateResolver =
          function(index) {
-            return (index === self.$scope.currentState) ? true : false;
+            return index === self.$scope.currentState;
          }
 
       this.$scope.favoriteResolver =
          function(item) {
             if (++self.$scope.favoritesCounter >= self.$scope.feed.entries.length) return;
             self.$scope.feed.entries[self.$scope.favoritesCounter]["index"] = self.$scope.favoritesCounter;
-            self.$scope.favoritesState.push(self.$scope.isFavorited(item.link) === -1 ? true : false);
+            self.$scope.favoritesState.push(self.$scope.isFavorited(item.link) === -1);
          }
    }
 }
