@@ -22,14 +22,20 @@ class MainAppController {
          key: ''
       }];
       this.$scope.favoritesList = [];
-      var startFeed = 'http://www.ololo.com/feed';
-      this.$scope.storedList = JSON.parse(document.cookie.match(/\[.*\]/));
-      Server.getFeedData(this.$http, startFeed, (data) => {
-         this.$scope.feed = data.feed;
-         this.$scope.favoritesCounter = -1;
-         console.log(data);
-      });
+      this.loadStartFeed(this);
       this.$scope.initSocket();
+   }
+
+   loadStartFeed(self) {
+      Server.getAllFeedsList(self.$http, (data) => {
+         console.log(data);
+         Server.getFeedData(self.$http, data[0].key, (data) => {
+            console.log(data);
+            self.$scope.feed = data.feed;
+            self.$scope.favoritesCounter = -1;
+            console.log(data);
+         });
+      });
    }
 
    initMenu() {
