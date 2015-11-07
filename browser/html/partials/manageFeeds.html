@@ -1,4 +1,4 @@
-<div class = "header">
+<div class="header">
    <h1>{{title}}</h1>
 </div>
 <ul ng-repeat="l in feeds">
@@ -9,11 +9,11 @@
 </ul>
 
 <div id="form1">
-      <form role="form" ng-submit="addFeedBack()">
-            <input type="text" class="input" ng-model="feed.name" placeholder="Enter feed name">
-            <hr>
-            <input type="text" class="input" ng-model="feed.key" placeholder="Enter feed URL">
-            <hr>
-            <input type="submit" class="button" value="Add">
-      </form>
+   <form role="form" ng-submit="addFeedBack()">
+      <input type="text" class="input" ng-model="feed.name" placeholder="Enter feed name">
+      <hr>
+      <input type="text" class="input" ng-model="feed.key" placeholder="Enter feed URL">
+      <hr>
+      <input type="submit" class="button" value="Add">
+   </form>
 </div>

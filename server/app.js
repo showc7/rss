@@ -1,7 +1,7 @@
-var   express = require('express'),
-      route = require('express-route-tree'),
-      serveStatic = require('serve-static'),
-      path = require("path");
+var express = require('express'),
+   route = require('express-route-tree'),
+   serveStatic = require('serve-static'),
+   path = require("path");
 
 app = express();
 
@@ -18,7 +18,7 @@ app.ws('/info', function(ws, req) {
    });
    ws.on('message', function(msg) {
       var aWss = expressws.getWss('/info');
-      aWss.clients.forEach(function (client) {
+      aWss.clients.forEach(function(client) {
          client.send(msg);
       });
    });

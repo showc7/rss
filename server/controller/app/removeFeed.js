@@ -10,11 +10,11 @@ exports.index = function(req, res, next) {
 
 removeFeedFromList = function(data) {
    var db = new PouchDB('http://localhost:5984/feed_urls');
-   db.get(data.url).then(function (doc) {
+   db.get(data.url).then(function(doc) {
       console.log('deleting');
       console.log(doc);
       db.remove(doc);
-   }).catch(function (err) {
+   }).catch(function(err) {
       console.log('deleting failed');
    });
 }

@@ -4,19 +4,19 @@ var ws = new WebSocket(Constants.Server.WEB_SOCKET.INFO);
 
 export default class Server {
 
-   static getAllFeedsList($http,callback) {
+   static getAllFeedsList($http, callback) {
       $http.get(Constants.Server.ALL_FEEDS).success((data) => {
          callback(data);
       });
    }
 
-   static getFeedData($http,url,callback) {
+   static getFeedData($http, url, callback) {
       $http.get(Constants.Server.FEED_DATA + '?url=' + url).success((data) => {
          callback(data);
       });
    }
 
-   static addFeed($http,url,name) {
+   static addFeed($http, url, name) {
       $http.get(Constants.Server.ADD_FEED + '?url=' + url + '&name=' + name);
       ws.send(JSON.stringify({
          url: url,
@@ -25,7 +25,7 @@ export default class Server {
       }));
    }
 
-   static removeFeed($http,url) {
+   static removeFeed($http, url) {
       $http.get(Constants.Server.REMOVE_FEED + '?url=' + url);
       console.log('sending');
       ws.send(JSON.stringify({
@@ -35,12 +35,12 @@ export default class Server {
    }
 
    static wsSend(data) {
-      if(ws.readyState == 1) {
+      if (ws.readyState == 1) {
          ws.send(data);
          console.log('wsSend 1 data: ' + data);
       } else {
          var that = this;
-         setTimeout(function () {
+         setTimeout(function() {
             that.wsSend(data);
          }, 100);
       }
@@ -48,7 +48,7 @@ export default class Server {
 
 
    static wsGet(callback) {
-      ws.onmessage = function (_event) {
+      ws.onmessage = function(_event) {
          callback(_event.data);
       };
    }

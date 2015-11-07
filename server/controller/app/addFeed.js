@@ -11,7 +11,7 @@ exports.index = function(req, res, next) {
 
 addToFeedsList = function(data) {
    var db = new PouchDB('http://localhost:5984/feed_urls');
-   db.get(data.url).then(function () {
+   db.get(data.url).then(function() {
       // exists
       console.log('exists');
       return;

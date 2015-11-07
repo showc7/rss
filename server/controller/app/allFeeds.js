@@ -9,7 +9,10 @@ exports.index = function(req, res, next, page, second) {
 
 getFeedsList = function(callback) {
    var db = new PouchDB('http://localhost:5984/feed_urls');
-   db.allDocs({include_docs: true, descending: true}, function(err, doc) {
+   db.allDocs({
+      include_docs: true,
+      descending: true
+   }, function(err, doc) {
       console.log(doc.rows);
       data = doc.rows;
       callback(data);
