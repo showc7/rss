@@ -1,6 +1,6 @@
 import Constants from '../../data/constants.es';
 
-var ws = new WebSocket('ws://localhost:8080/info');
+var ws = new WebSocket(WEB_SOCKET.INFO);
 
 export default class Server {
 
@@ -45,8 +45,8 @@ export default class Server {
          }, 100);
       }
    }
-   
-   
+
+
    static wsGet(callback) {
       ws.onmessage = function (_event) {
          callback(_event.data);
