@@ -31,7 +31,7 @@ class MainAppController {
          console.log(data);
          Server.getFeedData(self.$http, data[0].key, (data) => {
             console.log(data);
-            self.$scope.feed = data.feed;
+            self.$scope.feed = data;
             self.$scope.favoritesCounter = -1;
             console.log(data);
          });
@@ -152,7 +152,7 @@ class MainAppController {
          console.log('choseSourceListItem');
          console.log(item.key);
          Server.getFeedData(self.$http, item.key, (data) => {
-            self.$scope.feed = data.feed;
+            self.$scope.feed = data;
             console.log(data);
          });
          self.$scope.currentState = 2;
