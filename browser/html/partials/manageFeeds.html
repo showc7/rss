@@ -1,12 +1,10 @@
 <div class="header">
    <h1>{{title}}</h1>
 </div>
-<ul ng-repeat="l in feeds">
-   <li class="thumbnail">
+<div id="thumbnail" ng-repeat='l in feeds'>
       <a class="text" ng-click="$eval(l.onClick)(l)"> {{l.key}} </a>
       <div class="remove" ng-click="$eval(l.onRemove)(l)">X</div>
-   </li>
-</ul>
+</div>
 
 <div id="form1">
    <form role="form" ng-submit="addFeedBack()">

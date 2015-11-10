@@ -1,8 +1,9 @@
-            <div class="thumbnail">
-               <!--<a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
+            <div  ng-repeat="record in feed">
+               <!-- <a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
                <h3 class="description"> {{record.description}} </h3></br>-->
-               <div class="record" ng-repeat="item in feed.entries">
-                  
+
+			   <div id="thumbnail"ng-repeat="item in record.entries">
+
                      <a class="title" href="{{item.link}}">{{item.title}}</a>
                      <!--<div class="content" bind-html-unsafe="item.content">
                      </div>-->
@@ -12,12 +13,26 @@
                      <p class="date">
                         Author: {{item.author}}
                      </p>
+					 <div id="feed">
                      <p class="date">
                         Published date: {{item.publishedDate}}
                      </p>
-                     <div ng-show="favoriteResolver(item)"></div>
-                     <div class="likes" ng-click="addFavorite(item)" ng-show="favoritesState[item.index]">F</div>
-                     <div class="remove" ng-click="removeFavorite(item)" ng-show="!favoritesState[item.index]">X</div>
+					 </div>
+                     <div class="likes" ng-click="addFavorite(item)">F</div>
                </div>
             </div>
 
+
+
+      <!--<ul class="feed">
+         <li class="feed" ng-repeat="feed in feed">
+            <div class="thumbnail">
+               <p class="title"> {{feed.title}} </p>
+               <p class="title"> {{feed.text}} </p>
+               <p class="date"> {{feed.pubdate | date}}</p>
+               <a class="title" href="{{feed.link}}"> boo </a>
+               <div class="rating">
+                  <p class="likes" ng-click="plusOne($index)">{{feed.likes}} </p>
+                  <p class="dislikes" ng-click="minusOne($index)">{{feed.dislikes}} </p>
+               </div>
+            </div>
