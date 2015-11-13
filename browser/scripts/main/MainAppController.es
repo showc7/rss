@@ -33,6 +33,7 @@ class MainAppController {
             console.log(data);
             self.$scope.feed = data;
             self.$scope.favoritesCounter = -1;
+            this.$scope.favoriteResolver();
             console.log(data);
          });
       });
@@ -153,8 +154,9 @@ class MainAppController {
          Server.getFeedData(self.$http, item.key, (data) => {
             self.$scope.feed = data;
             console.log(data);
+            self.$scope.favoriteResolver();
+            self.$scope.currentState = 2;
          });
-         self.$scope.currentState = 2;
       }
 
       this.$scope.addFavorite = function(item) {
@@ -186,10 +188,16 @@ class MainAppController {
          self.$scope.favoritesState[item.index] = !self.$scope.favoritesState[item.index];
       };
 
+      this.$scope.retrieveFavoritesList = function() {
+         self.$scope.favoritesList = JSON.parse(document.cookie.match(/\[.*\]/));
+      };
+
       this.$scope.isFavorited = function(link) {
          var index = -1;
+         console.log(self.$scope.favoritesList);
          for (var i = 0, len = self.$scope.favoritesList.length; i < len; i++) {
             if (self.$scope.favoritesList[i].link === link) {
+               console.log(self.$scope.favoritesList[i].link);
                index = i;
                break;
             }
@@ -201,10 +209,15 @@ class MainAppController {
          return index === self.$scope.currentState;
       }
 
-      this.$scope.favoriteResolver = function(item) {
-         if (++self.$scope.favoritesCounter >= self.$scope.feed.entries.length) return;
-         self.$scope.feed.entries[self.$scope.favoritesCounter]["index"] = self.$scope.favoritesCounter;
-         self.$scope.favoritesState.push(self.$scope.isFavorited(item.link) === -1);
+      this.$scope.favoriteResolver = function() {
+         self.$scope.retrieveFavoritesList();
+         self.$scope.favoritesState = [];
+         for (var i = 0; i < self.$scope.feed.feed.entries.length; i++)  {
+            self.$scope.feed.feed.entries[i]["index"] = i;
+            self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed.feed.entries[i].link) === -1);
+         }
+         console.log('Ending');
+         console.log(self.$scope.favoritesState);
       }
    }
 }
