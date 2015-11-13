@@ -131,7 +131,6 @@ class MainAppController {
 
       this.$scope.removeFeed = function(item) {
          Server.removeFeed(self.$http, item.key);
-         self.$scope.list();
          self.$scope.currentState = 3;
       }
 
