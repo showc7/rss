@@ -58,6 +58,10 @@ hr{
 	width:77%;
 }
 
+#thumbnail a {
+   cursor: pointer;
+}
+
 .title,.date{
 	color: #444;
 	font-size: 18px;
