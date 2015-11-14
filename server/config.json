@@ -1,0 +1,15 @@
+{
+   "pouch": "http://localhost:5984",
+   "urls" : {
+      "google": {
+         "ajax_api": "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=20&q="
+      },
+      "feed": "/feed_urls",
+      "data": "/feeds_data",
+      "requests": "/requests"
+   },
+   "old_time": 10000,
+   "requests": {
+      "old_docs": ""
+   }
+}

@@ -1,7 +1,8 @@
 var express = require('express'),
    route = require('express-route-tree'),
    serveStatic = require('serve-static'),
-   path = require("path");
+   path = require("path"),
+   config = require('./config');
 
 app = express();
 
@@ -24,4 +25,15 @@ app.ws('/info', function(ws, req) {
    });
 });
 
+updater();
+
 app.listen(8080);
+
+function updater () {
+   var Pouch = require('pouchdb');
+   
+}
+
+function getOldDocuments () {
+
+}
