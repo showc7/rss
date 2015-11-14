@@ -2,7 +2,8 @@ var express = require('express'),
    route = require('express-route-tree'),
    serveStatic = require('serve-static'),
    path = require("path"),
-   config = require('./config');
+   config = require('./config'),
+   database = require('./helpers/database');
 
 app = express();
 
@@ -30,10 +31,11 @@ updater();
 app.listen(8080);
 
 function updater () {
-   var Pouch = require('pouchdb');
-   
-}
-
-function getOldDocuments () {
-
+   console.log('updater started');
+   setInterval(function(){
+      database.getOldDocuments(function(documents){
+         console.log(documents);
+         database.updateDocumentsInfo(documents);
+      });
+   }, 10 * 1000);
 }

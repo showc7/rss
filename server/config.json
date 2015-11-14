@@ -6,10 +6,7 @@
       },
       "feed": "/feed_urls",
       "data": "/feeds_data",
-      "requests": "/requests"
+      "requests": "/timestamps"
    },
-   "old_time": 10000,
-   "requests": {
-      "old_docs": ""
-   }
+   "old_time": 10000
 }
