@@ -28,6 +28,12 @@ export default class Server {
       });
    }
 
+   static getPostsCount($http, url, callback) {
+      $http.get(Constants.Server.FEED_POSTS_COUNT + '?url=' + url).success((data) => {
+         callback(data);
+      });
+   }
+
    static addFeed($http, url, name) {
       $http.get(Constants.Server.ADD_FEED + '?url=' + url + '&name=' + name);
       ws.send(JSON.stringify({
