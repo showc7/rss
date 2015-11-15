@@ -16,6 +16,18 @@ export default class Server {
       });
    }
 
+   static getFeedData2($http, url, offset, count, callback) {
+      $http.get(Constants.Server.FEED_DATA + '?url=' + url + '&offset=' + offset + '&count=' + count).success((data) => {
+         var newData = [];
+         for(var i in data) {
+            newData.push(data[i].doc);
+         }
+         console.log('newData');
+         console.log(newData);
+         callback(newData);
+      });
+   }
+
    static addFeed($http, url, name) {
       $http.get(Constants.Server.ADD_FEED + '?url=' + url + '&name=' + name);
       ws.send(JSON.stringify({

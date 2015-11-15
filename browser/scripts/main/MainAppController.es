@@ -17,10 +17,7 @@ class MainAppController {
       this.$scope.favoritesState = [];
       this.$scope.favoritesCounter = -1;
       this.$scope.feeds = [];
-      this.$scope.feed = [{
-         name: '',
-         key: ''
-      }];
+      this.$scope.feed = [{name: '',key: ''}];
       this.$scope.favoritesList = [];
       this.loadStartFeed(this);
       this.$scope.initSocket();
@@ -29,7 +26,7 @@ class MainAppController {
    loadStartFeed(self) {
       Server.getAllFeedsList(self.$http, (data) => {
          console.log(data);
-         Server.getFeedData(self.$http, data[0].key, (data) => {
+         Server.getFeedData2(self.$http, data[0].key, 0, 4, (data) => {
             console.log(data);
             self.$scope.feed = data;
             self.$scope.favoritesCounter = -1;
@@ -151,7 +148,7 @@ class MainAppController {
       this.$scope.choseSourceListItem = function(item) {
          console.log('choseSourceListItem');
          console.log(item.key);
-         Server.getFeedData(self.$http, item.key, (data) => {
+         Server.getFeedData2(self.$http, item.key, 0, 4, (data) => {
             self.$scope.feed = data;
             console.log(data);
             self.$scope.favoriteResolver();
@@ -212,9 +209,9 @@ class MainAppController {
       this.$scope.favoriteResolver = function() {
          self.$scope.retrieveFavoritesList();
          self.$scope.favoritesState = [];
-         for (var i = 0; i < self.$scope.feed.feed.entries.length; i++)  {
-            self.$scope.feed.feed.entries[i]["index"] = i;
-            self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed.feed.entries[i].link) === -1);
+         for (var i = 0; i < self.$scope.feed.length; i++)  {
+            self.$scope.feed[i]["index"] = i;
+            self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed[i].link) === -1);
          }
          console.log('Ending');
          console.log(self.$scope.favoritesState);
