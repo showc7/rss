@@ -84,29 +84,40 @@ exports.getPagedData = function(db, url, offset, count, collback) {
 
 // TODO: rev - shod be romoved
 exports.performRequest = function(db, url, callback, rev) {
-   console.log(config.urls.google.ajax_api + url);
+   console.log('request to: ' + config.urls.google.ajax_api + url);
    request(config.urls.google.ajax_api + url, function(error, response, body) {
       var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
+      console.log('newUrl ' + newUrl);
       exports.setRequestTimestamp(newUrl,url);
       var data = (JSON.parse(body)).responseData;
       for(feed in data.feed.entries) {
          var newDoc = {};
-         newDoc['_id'] = data.feed.entries[feed]['publishedDate'];
+         newDoc._id = data.feed.entries[feed]['publishedDate'];
          for(var f in data.feed.entries[feed]) {
             newDoc[f] = data.feed.entries[feed][f];
          }
-         //console.log(newDoc);
-         db.put(newDoc).then(function (responce) {
-            //console.log('response ' + response);
+         (function (newDoc) {
+         console.log(newDoc.publishedDate);
+         db.get(newDoc._id).then(function(doc) {
+            //console.log('do not add');
+            //console.log(doc._id);
+            //console.log(newDoc._id);
          }).catch(function(err){
-            console.log('err' + err);
+            console.log('should be added');
+            db.put(newDoc).then(function (responce) {
+               console.log('response ' + response);
+            }).catch(function(err){
+               console.log('err' + err);
+               console.log(newDoc.publishedDate);
+            })
          });
+         })(newDoc);
       }
       db.allDocs({
          include_docs: true,
          descending: true
       }, function(err, doc) {
-         console.log(err);
+         console.log("err:" + err);
          data = doc.rows;
          callback(data);
       });
@@ -131,7 +142,7 @@ exports.setRequestTimestamp = function(database_name, _url) {
    var db = new PouchDB(config.pouch + config.urls.requests);
    db.get(database_name, function (doc) {
       if(doc === null) {
-         console.log('null');
+         console.log('doc null');
          return;
       }
       console.log('timestamp:update');
@@ -188,14 +199,13 @@ exports.putView = function (callback) {
       console.log(err);
       callback(null);
    });
-
 }
 
 exports.updateDocumentsInfo = function (list) {
    for(l in list) {
       var d = list[l];
-      console.log('d:' + d);
-      var db = new PouchDB(config.pouch + '/' + d._id);
+      console.log('d:' + d.value._id);
+      var db = new PouchDB(config.pouch + '/' + d.value._id);
       console.log('update url: ' + d.value.url);
       exports.performRequest(db, d.value.url, function () {
          console.log('updated' + d.value.url);
