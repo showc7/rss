@@ -44,6 +44,7 @@ hr{
    transition: background 500ms;
 }
 
+
 #thumbnail, #form1 {
 	padding:5px;
 	margin-bottom:20px;
@@ -60,6 +61,19 @@ hr{
 
 #thumbnail a {
    cursor: pointer;
+}
+
+.navigator {
+   text-align: center;
+}
+
+.paging {
+   color: #3333AA;
+}
+
+.paging:hover {
+   color: #c3730a;
+   text-decoration: underline;
 }
 
 .title,.date{
