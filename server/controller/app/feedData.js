@@ -5,8 +5,10 @@ database = require('../../helpers/database');
 
 exports.index = function(req, res) {
    url = req.query.url;
+   offset = req.query.offset;
+   count = req.query.count;
    console.log(url);
-   database.getData(url, function(data) {
+   database.getData(url, offset, count, function(data) {
       res.send(data);
       res.end();
    });

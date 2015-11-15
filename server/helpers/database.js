@@ -31,7 +31,7 @@ exports.getFeedsList = function(callback) {
    });
 }
 
-exports.getData = function(url, callback) {
+exports.getData = function(url, offset, count, callback) {
    var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
    var db = new PouchDB(config.pouch + '/' + newUrl);
    db.allDocs({
@@ -42,13 +42,46 @@ exports.getData = function(url, callback) {
       if(!doc.rows.length) {
          console.log('first request');
          //exports.performRequest(db, url, callback, null);
-         exports.performRequest(db, url, function(data){callback(data);}, null);
+         exports.performRequest(db, url, function (data){
+            exports.getPagedData(db, url, offset, count, callback, null)
+         });
       } else {
          //performRequest(db, url, callback, null);
-         callback(doc.rows);
+         //callback(doc.rows);
+         exports.getPagedData(db, url, offset, count, callback, null);
       }
    });
 }
+
+exports.getPagedData = function(db, url, offset, count, collback) {
+   console.log('get paged data');
+   var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
+   console.log(newUrl);
+   db = PouchDB(config.pouch + '/' + newUrl);
+   //var reqStr = 'http://localhost:5984/' + newUrl + '/_design/all/_view/all';
+   if(!offset && !count) {
+      offset = 0;
+      count = 4;
+   }
+   /*
+   reqStr += '?limit=' + count;
+   reqStr += '&skip=' + offset;
+   request(reqStr, function (error, responce, body) {
+      data = JSON.parse(body);
+      console.log(data.rows);
+      collback(data.rows);
+   });
+   */
+   db.allDocs({
+      skip: offset,
+      limit: count,
+      include_docs: true
+   }, function (err, response) {
+      console.log(response.rows);
+      collback(response.rows);
+   });
+}
+
 // TODO: rev - shod be romoved
 exports.performRequest = function(db, url, callback, rev) {
    console.log(config.urls.google.ajax_api + url);
