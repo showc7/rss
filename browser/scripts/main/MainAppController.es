@@ -155,14 +155,9 @@ class MainAppController {
 
       this.$scope.choseSourceListItem = function(item, pageOffset = 1) {
          console.log('choseSourceListItem');
-         console.log(item.key);
-         console.log(pageOffset);
-         console.log(self.$scope.currentFeed);
-         console.log(item.key);
          Server.getFeedData2(self.$http, item, (pageOffset - 1) * self.$scope.POSTS_PER_PAGE, 
                self.$scope.POSTS_PER_PAGE, (data) => {
             self.$scope.feed = data;
-            console.log(data);
             self.$scope.favoriteResolver();
             self.$scope.currentState = 2;
          });
@@ -230,21 +225,13 @@ class MainAppController {
             self.$scope.feed[i]["index"] = i;
             self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed[i].link) === -1);
          }
-         console.log('Ending');
-         console.log(self.$scope.favoritesState);
       }
 
       this.$scope.pagingRange = function(min, max, step) {
          step = step || 1;
          var input = [];
-         console.log('PAGING!!!!!!!!!');
-         console.log(min);
-         console.log(max);
-         console.log(self.$scope.pagesNumber);
          if (min < 1) min = 1;
          if (max > self.$scope.pagesNumber) max = self.$scope.pagesNumber;
-         console.log(min);
-         console.log(max);
          for (var i = min; i <= max; i += step) {
             input.push(i);
          }
