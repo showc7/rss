@@ -1,11 +1,11 @@
-<div class = "header">
-   <a ng-click="choseSourceListItem(currentFeed, 1)"><<<</a>
-   <a ng-repeat="n in pagingRange(currentPage - 5, currentPage - 1)" ng-click="choseSourceListItem(currentFeed, n)">
+<div class = "navigator">
+   <a class = "paging" ng-click="choseSourceListItem(currentFeed, 1)"><<<</a>
+   <a class = "paging" ng-repeat="n in pagingRange(currentPage - 5, currentPage - 1)" ng-click="choseSourceListItem(currentFeed, n)">
       {{n}}
    </a>
    {{currentPage}}
-   <a ng-repeat="n in pagingRange(currentPage + 1, currentPage + 5)" ng-click="choseSourceListItem(currentFeed, n)">
+   <a class = "paging" ng-repeat="n in pagingRange(currentPage + 1, currentPage + 5)" ng-click="choseSourceListItem(currentFeed, n)">
       {{n}}
    </a>
-   <a ng-click="choseSourceListItem(currentFeed, pagesNumber)">>>></a>
+   <a class = "paging" ng-click="choseSourceListItem(currentFeed, pagesNumber)">>>></a>
 </div>
