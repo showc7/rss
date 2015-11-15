@@ -26,7 +26,7 @@ app.ws('/info', function(ws, req) {
    });
 });
 
-//updater();
+updater();
 
 app.listen(8080);
 

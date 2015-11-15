@@ -157,9 +157,38 @@ exports.setRequestTimestamp = function(database_name, _url) {
 }
 
 exports.getOldDocuments = function (callback) {
-   request('http://localhost:5984/timestamps/_design/old_docs/_view/old_docs', function (error, responce, body) {
+   console.log('get old documents');
+   //request('http://localhost:5984/timestamps/_design/old_docs/_view/old_docs', function (error, responce, body) {
+   request('http://localhost:5984/timestamps/_design/show/_view/show', function (error, responce, body) {
+      console.log(body);
+      if(JSON.parse(body).error) {
+         console.log('creating view');
+         exports.putView(function () {
+            exports.getOldDocuments(callback);
+         });
+      }
       callback(JSON.parse(body).rows)
    });
+}
+
+exports.putView = function (callback) {
+   console.log('put view');
+   var db = new PouchDB(config.pouch + '/timestamps');
+   db.put({
+      _id: '_design/show',
+      language: 'javascript',
+      views: {
+         show: {
+            map: "function(doc) {\n  emit(null,doc);\n}"
+         }
+      }
+   }).then(function () {
+      callback();
+   }).catch(function (err) {
+      console.log(err);
+      callback(null);
+   });
+
 }
 
 exports.updateDocumentsInfo = function (list) {
