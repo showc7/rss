@@ -211,6 +211,7 @@ exports.putView = function (callback) {
       console.log(err);
       callback(null);
    });
+}
 
 pregUrl = function(url) {
    return url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
