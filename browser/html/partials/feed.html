@@ -1,31 +1,33 @@
-            <div  ng-repeat="record in feed">
-               <!-- <a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
+<div id="thumbnail" ng-repeat="item in feed">
+   <!-- <a class="title" href="{{record.link}}"> <h2>{{record.title}} </h2></a>
                <h3 class="description"> {{record.description}} </h3></br>-->
 
-	       <div id="thumbnail"ng-repeat="item in record.entries">
+   <!--<div id="thumbnail" ng-repeat="item in record.entries">-->
 
-                     <a class="title" href="{{item.link}}">{{item.title}}</a>
-                     <!--<div class="content" bind-html-unsafe="item.content">
+      <a class="title" href="{{item.link}}">{{item.title}}</a>
+      <!--<div class="content" bind-html-unsafe="item.content">
                      </div>-->
-                     <p class="title">
-                        {{item.contentSnippet}}
-                     </p>
-                     <p class="date">
-                        Author: {{item.author}}
-                     </p>
-					 <div id="feed">
-                     <p class="date">
-                        Published date: {{item.publishedDate}}
-                     </p>
-		     </div>
-                     <div class="likes" ng-click="addFavorite(item)" ng-show="favoritesState[item.index]">F</div>
-                     <div class="remove" ng-click="removeFavorite(item)" ng-show="!favoritesState[item.index]">X</div>
-               </div>
-            </div>
+      <p class="title">
+         {{item.contentSnippet}}
+      </p>
+      <p class="date">
+         Author: {{item.author}}
+      </p>
+      <div id="feed">
+         <p class="date">
+            Published date: {{item.publishedDate}}
+         </p>
+      </div>
+      <div class="likes" ng-click="addFavorite(item)" ng-show="favoritesState[item.index]">F</div>
+      <div class="remove" ng-click="removeFavorite(item)" ng-show="!favoritesState[item.index]">X</div>
+   <!--</div>-->
+</div>
+
+<div id="thumbnail" ng-include="'partials/navigator.html'"></div>
 
 
 
-      <!--<ul class="feed">
+<!--<ul class="feed">
          <li class="feed" ng-repeat="feed in feed">
             <div class="thumbnail">
                <p class="title"> {{feed.title}} </p>

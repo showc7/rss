@@ -10,6 +10,10 @@ class MainAppController {
 
    initalize(self) {
       console.log('initialize');
+      this.$scope.POSTS_PER_PAGE = 5;
+      this.$scope.pagesNumber = 0;
+      this.$scope.currentFeed = '';
+      this.$scope.currentPage = 1;
       this.$scope.feeds = [];
       this.$scope.menu = this.initMenu();
       this.addHandlers(self);
@@ -17,10 +21,7 @@ class MainAppController {
       this.$scope.favoritesState = [];
       this.$scope.favoritesCounter = -1;
       this.$scope.feeds = [];
-      this.$scope.feed = [{
-         name: '',
-         key: ''
-      }];
+      this.$scope.feed = [{name: '',key: ''}];
       this.$scope.favoritesList = [];
       this.loadStartFeed(this);
       this.$scope.initSocket();
@@ -29,13 +30,17 @@ class MainAppController {
    loadStartFeed(self) {
       Server.getAllFeedsList(self.$http, (data) => {
          console.log(data);
-         Server.getFeedData(self.$http, data[0].key, (data) => {
+         Server.getFeedData2(self.$http, data[0].key, 0, self.$scope.POSTS_PER_PAGE, (data) => {
             console.log(data);
             self.$scope.feed = data;
             self.$scope.favoritesCounter = -1;
-            this.$scope.favoriteResolver();
-            console.log(data);
+            self.$scope.favoriteResolver();
          });
+         Server.getPostsCount(self.$http, data[0].key, (data) => {
+            self.$scope.pagesNumber = Math.floor((data.count - 1) / self.$scope.POSTS_PER_PAGE) + 1;
+         });
+         self.$scope.currentFeed = data[0].key;
+         self.$scope.currentPage = 1;
       });
    }
 
@@ -148,15 +153,19 @@ class MainAppController {
          Server.addFeed(self.$http, self.$scope.feed.key, self.$scope.feed.name);
       }
 
-      this.$scope.choseSourceListItem = function(item) {
+      this.$scope.choseSourceListItem = function(item, pageOffset = 1) {
          console.log('choseSourceListItem');
-         console.log(item.key);
-         Server.getFeedData(self.$http, item.key, (data) => {
+         Server.getFeedData2(self.$http, item, (pageOffset - 1) * self.$scope.POSTS_PER_PAGE, 
+               self.$scope.POSTS_PER_PAGE, (data) => {
             self.$scope.feed = data;
-            console.log(data);
             self.$scope.favoriteResolver();
             self.$scope.currentState = 2;
          });
+         Server.getPostsCount(self.$http, item, (data) => {
+            self.$scope.pagesNumber = Math.floor((data.count - 1) / self.$scope.POSTS_PER_PAGE) + 1;
+         });
+         self.$scope.currentFeed = item;
+         self.$scope.currentPage = pageOffset;
       }
 
       this.$scope.addFavorite = function(item) {
@@ -212,13 +221,22 @@ class MainAppController {
       this.$scope.favoriteResolver = function() {
          self.$scope.retrieveFavoritesList();
          self.$scope.favoritesState = [];
-         for (var i = 0; i < self.$scope.feed.feed.entries.length; i++)  {
-            self.$scope.feed.feed.entries[i]["index"] = i;
-            self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed.feed.entries[i].link) === -1);
+         for (var i = 0; i < self.$scope.feed.length; i++)  {
+            self.$scope.feed[i]["index"] = i;
+            self.$scope.favoritesState.push(self.$scope.isFavorited(self.$scope.feed[i].link) === -1);
          }
-         console.log('Ending');
-         console.log(self.$scope.favoritesState);
       }
+
+      this.$scope.pagingRange = function(min, max, step) {
+         step = step || 1;
+         var input = [];
+         if (min < 1) min = 1;
+         if (max > self.$scope.pagesNumber) max = self.$scope.pagesNumber;
+         for (var i = min; i <= max; i += step) {
+            input.push(i);
+         }
+         return input;
+      };
    }
 }
 

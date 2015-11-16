@@ -31,8 +31,19 @@ exports.getFeedsList = function(callback) {
    });
 }
 
+exports.getPostsCount = function(url, callback) {
+   var newUrl = pregUrl(url);
+   var db = new PouchDB(config.pouch + '/' + newUrl);
+   db.allDocs({
+      include_docs: false,
+   }, function(err, doc) {
+      data = doc.rows.length;
+      callback(data);
+   });
+}
+
 exports.getData = function(url, offset, count, callback) {
-   var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
+   var newUrl = pregUrl(url);
    var db = new PouchDB(config.pouch + '/' + newUrl);
    db.allDocs({
       include_docs: true,
@@ -55,7 +66,7 @@ exports.getData = function(url, offset, count, callback) {
 
 exports.getPagedData = function(db, url, offset, count, collback) {
    console.log('get paged data');
-   var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
+   var newUrl = pregUrl(url);
    console.log(newUrl);
    db = PouchDB(config.pouch + '/' + newUrl);
    //var reqStr = 'http://localhost:5984/' + newUrl + '/_design/all/_view/all';
@@ -77,6 +88,8 @@ exports.getPagedData = function(db, url, offset, count, collback) {
       limit: count,
       include_docs: true
    }, function (err, response) {
+      console.log('response.rows');
+      console.log(response);
       console.log(response.rows);
       collback(response.rows);
    });
@@ -86,8 +99,7 @@ exports.getPagedData = function(db, url, offset, count, collback) {
 exports.performRequest = function(db, url, callback, rev) {
    console.log('request to: ' + config.urls.google.ajax_api + url);
    request(config.urls.google.ajax_api + url, function(error, response, body) {
-      var newUrl = url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
-      console.log('newUrl ' + newUrl);
+      var newUrl = pregUrl(url);
       exports.setRequestTimestamp(newUrl,url);
       var data = (JSON.parse(body)).responseData;
       for(feed in data.feed.entries) {
@@ -199,6 +211,9 @@ exports.putView = function (callback) {
       console.log(err);
       callback(null);
    });
+
+pregUrl = function(url) {
+   return url.replace(/:/g,'_').replace(/\//g,'_').replace(/\./g,'_');
 }
 
 exports.updateDocumentsInfo = function (list) {
