@@ -86,7 +86,8 @@ exports.getPagedData = function(db, url, offset, count, collback) {
    db.allDocs({
       skip: offset,
       limit: count,
-      include_docs: true
+      include_docs: true,
+      descending: true
    }, function (err, response) {
       console.log('response.rows');
       console.log(response);
