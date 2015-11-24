@@ -151,6 +151,8 @@ class MainAppController {
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
          Server.addFeed(self.$http, self.$scope.feed.key, self.$scope.feed.name);
+         self.$scope.feed.key = '';
+         self.$scope.feed.name = '';
       }
 
       this.$scope.choseSourceListItem = function(item, pageOffset = 1) {
@@ -187,6 +189,9 @@ class MainAppController {
       this.$scope.removeFavorite = function(item) {
          console.log('removeFavorite');
          console.log(item);
+         console.log(item.index);
+         console.log(self.$scope.favoritesState);
+         self.$scope.favoritesState[item.index] = !self.$scope.favoritesState[item.index];
          var storedList = JSON.parse(document.cookie.match(/\[.*\]/));
          var index = self.$scope.isFavorited(item.link);
          if (index > -1) {
@@ -194,7 +199,9 @@ class MainAppController {
          }
          document.cookie = 'favorites=' + JSON.stringify(storedList);
          self.$scope.favoritesList = storedList;
-         self.$scope.favoritesState[item.index] = !self.$scope.favoritesState[item.index];
+                     self.$scope.favoritesCounter = -1;
+            self.$scope.favoriteResolver();
+         console.log(self.$scope.favoritesState);
       };
 
       this.$scope.retrieveFavoritesList = function() {

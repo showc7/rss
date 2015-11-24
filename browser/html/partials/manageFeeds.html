@@ -2,7 +2,7 @@
    <h1>{{title}}</h1>
 </div>
 <div id="thumbnail" ng-repeat='l in feeds'>
-      <a class="text" ng-click="$eval(l.onClick)(l)"> {{l.key}} </a>
+      <a class="text" ng-click="$eval(l.onClick)(l)"> {{l.doc.name}} ({{l.key}}) </a>
       <div class="remove" ng-click="$eval(l.onRemove)(l)">X</div>
 </div>
 
