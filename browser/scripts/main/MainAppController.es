@@ -151,6 +151,8 @@ class MainAppController {
          self.$scope.menu = self.initMenu();
          self.$scope.currentState = 2;
          Server.addFeed(self.$http, self.$scope.feed.key, self.$scope.feed.name);
+         self.$scope.feed.key = '';
+         self.$scope.feed.name = '';
       }
 
       this.$scope.choseSourceListItem = function(item, pageOffset = 1) {
