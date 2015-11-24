@@ -49,7 +49,6 @@ exports.getData = function(url, offset, count, callback) {
       include_docs: true,
       descending: true
    }, function (err, doc){
-      console.log(doc.rows.length);
       if(!doc.rows.length) {
          console.log('first request');
          //exports.performRequest(db, url, callback, null);
@@ -59,6 +58,7 @@ exports.getData = function(url, offset, count, callback) {
       } else {
          //performRequest(db, url, callback, null);
          //callback(doc.rows);
+         console.log(doc.rows.length);
          exports.getPagedData(db, url, offset, count, callback, null);
       }
    });
@@ -103,6 +103,7 @@ exports.performRequest = function(db, url, callback, rev) {
       var newUrl = pregUrl(url);
       exports.setRequestTimestamp(newUrl,url);
       var data = (JSON.parse(body)).responseData;
+      console.log(data);
       for(feed in data.feed.entries) {
          var newDoc = {};
          newDoc._id = data.feed.entries[feed]['publishedDate'];
@@ -153,7 +154,7 @@ exports.setRequestTimestamp = function(database_name, _url) {
    console.log('timestamp');
    console.log(config.pouch + config.urls.requests);
    var db = new PouchDB(config.pouch + config.urls.requests);
-   db.get(database_name, function (doc) {
+   db.get(database_name).then(function (doc) {
       if(doc === null) {
          console.log('doc null');
          return;
@@ -183,7 +184,9 @@ exports.setRequestTimestamp = function(database_name, _url) {
 exports.getOldDocuments = function (callback) {
    console.log('get old documents');
    //request('http://localhost:5984/timestamps/_design/old_docs/_view/old_docs', function (error, responce, body) {
-   request('http://localhost:5984/timestamps/_design/show/_view/show', function (error, responce, body) {
+   // !!! CHANGE TIME TO FIVE MINUTES. 20 SECONDS ONLY FOR DEMONSTRATION REASONS !!!
+   console.log('http://localhost:5984/timestamps/_design/show/_view/show?endkey=' + (new Date().getTime() - 20 * 1000));
+   request('http://localhost:5984/timestamps/_design/show/_view/show?endkey=' + (new Date().getTime() - 20 * 1000), function (error, responce, body) {
       console.log(body);
       if(JSON.parse(body).error) {
          console.log('creating view');
@@ -203,7 +206,7 @@ exports.putView = function (callback) {
       language: 'javascript',
       views: {
          show: {
-            map: "function(doc) {\n  emit(null,doc);\n}"
+            map: "function(doc) {\n  emit(doc.time, doc);\n}"
          }
       }
    }).then(function () {
@@ -221,7 +224,7 @@ pregUrl = function(url) {
 exports.updateDocumentsInfo = function (list) {
    for(l in list) {
       var d = list[l];
-      console.log('d:' + d.value._id);
+      console.log('d.value._id :' + d.value._id);
       var db = new PouchDB(config.pouch + '/' + d.value._id);
       console.log('update url: ' + d.value.url);
       exports.performRequest(db, d.value.url, function () {
